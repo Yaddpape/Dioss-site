@@ -23,6 +23,7 @@ d'entretien (WooCommerce) et formation pour devenir fabricant. Plus un blog SEO.
 - `assets/css/main.css` — styles du site. `assets/css/formation.css` — page Formation, toutes les règles préfixées `.lp`.
 - `assets/js/main.js` — menu mobile, apparitions au défilement, compteurs, vidéos, projecteur sur les cartes.
 - Signature de l'accueil (fin de `main.css`, « coup de raclette ») : vitre ternie balayée par une raclette dorée à l'ouverture (CSS seul, `@property --wx`), sceau rotatif, bandeau de signatures, reflet des boutons dorés. Tout est coupé avec `prefers-reduced-motion`.
+- Prestige v2 (fin de `main.css` et `main.js`) : manifeste qui s'allume mot à mot au défilement (`[data-manif]`), bande gamme plein écran en parallaxe (`[data-parallax]`), ligne d'étapes qui se trace (`[data-draw]`), engagements numérotés, navigation transparente sur l'accueil (`.nav.solid` au défilement), grain argentique, signature géante en pied de page, contacts cliquables.
 - `assets/img/` — images (générées sur Higgsfield, sans personnes ; photos produits réelles).
 
 ## Identité

@@ -4,7 +4,7 @@
     b.addEventListener('click', function () { var o = d.classList.toggle('open'); b.setAttribute('aria-expanded', o); });
     d.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { d.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); }); });
   }
-  var els = [].slice.call(document.querySelectorAll('.rv'));
+  var els = [].slice.call(document.querySelectorAll('.rv,[data-draw]'));
   if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); }
   else {
     var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .1, rootMargin: '0px 0px -40px 0px' });
@@ -26,4 +26,34 @@
       p.style.setProperty('--my', (e.clientY - r.top) + 'px');
     });
   });
+})();
+(function () {
+  var rm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nav = document.querySelector('.home .nav'), drawer = document.getElementById('drawer');
+  var m = document.querySelector('[data-manif]'), words = m ? [].slice.call(m.children) : [];
+  var px = rm ? [] : [].slice.call(document.querySelectorAll('[data-parallax]'));
+  if (m && !rm) m.classList.add('js');
+  var ticking = false;
+  function frame() {
+    ticking = false;
+    var vh = window.innerHeight;
+    if (nav) nav.classList.toggle('solid', window.scrollY > 30 || (drawer && drawer.classList.contains('open')));
+    if (m && !rm) {
+      var r = m.getBoundingClientRect();
+      var p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35)));
+      var n = Math.round(p * words.length);
+      words.forEach(function (w, i) { w.classList.toggle('on', i < n); });
+    }
+    px.forEach(function (el) {
+      var r = el.parentNode.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      var c = (r.top + r.height / 2 - vh / 2) / (vh + r.height);
+      el.style.transform = 'translate3d(0,' + (c * -16).toFixed(2) + '%,0)';
+    });
+  }
+  function req() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
+  window.addEventListener('scroll', req, { passive: true });
+  window.addEventListener('resize', req);
+  var b = document.getElementById('burger'); if (b) b.addEventListener('click', function () { setTimeout(req, 0); });
+  frame();
 })();

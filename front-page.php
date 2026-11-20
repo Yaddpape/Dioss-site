@@ -18,6 +18,22 @@ foreach ( $md_sig as $sig ) { $md_grp .= '<span>' . esc_html( $sig ) . '</span><
 ?>
 <div class="ticker"><div class="ticker-t"><div class="grp"><?php echo $md_grp; // phpcs:ignore -- échappé ci-dessus ?></div><div class="grp" aria-hidden="true"><?php echo $md_grp; // phpcs:ignore ?></div></div></div>
 
+<?php
+$md_manif = 'Nous *fabriquons* nos propres produits. Nos équipes les utilisent *chaque* *jour* sur le terrain. Et nous *transmettons* notre méthode à ceux qui veulent se lancer.';
+$md_words = '';
+foreach ( explode( ' ', $md_manif ) as $w ) {
+	$g = '*' === substr( $w, 0, 1 );
+	$md_words .= '<span' . ( $g ? ' class="g"' : '' ) . '>' . esc_html( trim( $w, '*' ) ) . '</span> ';
+}
+?>
+<section class="manif">
+<div class="wrap">
+<div class="eyebrow rv">Notre manifeste</div>
+<p class="manif-t" data-manif><?php echo $md_words; // phpcs:ignore -- échappé ci-dessus ?></p>
+<div class="manif-s rv">Monsieur Dioss · Le patron de la propreté</div>
+</div>
+</section>
+
 <section class="sec">
 <div class="wrap">
 <div class="eyebrow rv">Trois métiers, une exigence</div>
@@ -38,6 +54,16 @@ foreach ( $md_sig as $sig ) { $md_grp .= '<span>' . esc_html( $sig ) . '</span><
 </div>
 <?php md_products_grid( 4 ); ?>
 <p class="rv" style="margin:22px 0 0;color:#3E4A60;font-size:14.5px">Commerçants et revendeurs : prix par carton sur demande. <a href="<?php echo esc_url( md_wa( 'Bonjour, je souhaite devenir revendeur Monsieur Dioss.' ) ); ?>" target="_blank" rel="noopener" style="color:#7A5A12;font-weight:700">Devenir revendeur</a></p>
+</div>
+</section>
+
+<section class="gband">
+<img class="gband-img" data-parallax src="<?php echo md_img( 'gamme.jpg' ); ?>" alt="La gamme de produits d'entretien Monsieur Dioss" loading="lazy">
+<div class="wrap">
+<div class="eyebrow rv">La gamme Monsieur Dioss</div>
+<h2 class="rv d1">Formulée, fabriquée et testée <em>au Sénégal.</em></h2>
+<p class="lead rv d2">Chaque produit passe d'abord par nos propres chantiers avant d'arriver chez vous.</p>
+<div class="cta rv d3"><a class="btn btn-gold" href="<?php echo esc_url( md_shop_url() ); ?>">Découvrir la gamme <?php echo md_icon( 'arr' ); ?></a></div>
 </div>
 </section>
 
@@ -105,7 +131,7 @@ if ( $md_posts->have_posts() ) :
 </section>
 <?php endif; ?>
 
-<section class="sec light" id="contact" style="padding-top:0">
+<section class="sec light" id="contact">
 <div class="wrap">
 <div class="eyebrow rv">Contact</div>
 <h2 class="h2 rv d1" style="margin-top:12px">Parlons de votre besoin</h2>

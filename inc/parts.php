@@ -56,7 +56,7 @@ function md_services_cards() {
 
 function md_steps() {
 	?>
-	<div class="steps">
+	<div class="steps" data-draw>
 	<div class="step rv"><h3>Votre demande</h3><p>Sur WhatsApp ou par téléphone, avec quelques photos des lieux.</p></div>
 	<div class="step rv d1"><h3>Votre devis</h3><p>Un prix clair selon la surface et l'état, avant toute intervention.</p></div>
 	<div class="step rv d2"><h3>L'intervention</h3><p>Une équipe encadrée par un superviseur, avec nos propres produits.</p></div>
@@ -68,15 +68,15 @@ function md_steps() {
 function md_contact_cards() {
 	?>
 	<div class="ct">
-	<div class="ctc rv"><small>COMMANDES &amp; DEVIS</small><b><?php echo esc_html( md_opt( 'phone_display' ) ); ?></b><span>WhatsApp et appels</span></div>
-	<div class="ctc rv d1"><small>E-MAIL</small><b style="word-break:break-word"><?php echo esc_html( md_opt( 'email' ) ); ?></b><span>Réponse sous 24 h</span></div>
+	<a class="ctc rv" href="tel:+<?php echo esc_attr( preg_replace( '/\D/', '', md_opt( 'whatsapp' ) ) ); ?>"><small>COMMANDES &amp; DEVIS</small><b><?php echo esc_html( md_opt( 'phone_display' ) ); ?></b><span>WhatsApp et appels <?php echo md_icon( 'arr' ); ?></span></a>
+	<a class="ctc rv d1" href="mailto:<?php echo esc_attr( md_opt( 'email' ) ); ?>"><small>E-MAIL</small><b style="word-break:break-word"><?php echo esc_html( md_opt( 'email' ) ); ?></b><span>Réponse sous 24 h <?php echo md_icon( 'arr' ); ?></span></a>
 	<div class="ctc rv d2"><small>ZONE</small><b><?php echo esc_html( md_opt( 'zone' ) ); ?></b><span>Livraison et interventions</span></div>
 	</div>
 	<?php
 }
 
 function md_page_hero( $eyebrow, $title, $lead = '', $img = 'salon.jpg' ) {
-	echo '<section class="page-hero"><div class="bg"><img src="' . md_img( $img ) . '" alt=""></div><div class="wrap">';
+	echo '<section class="page-hero"><div class="bg"><img src="' . md_img( $img ) . '" alt=""><div class="glass" aria-hidden="true"><i class="fog"></i><i class="gleam"></i><i class="blade"></i></div></div><div class="wrap">';
 	echo '<div class="crumbs"><a href="' . esc_url( home_url( '/' ) ) . '">Accueil</a> / ' . esc_html( $eyebrow ) . '</div>';
 	echo '<h1>' . esc_html( $title ) . '</h1>';
 	if ( $lead ) { echo '<p class="lead">' . esc_html( $lead ) . '</p>'; }
