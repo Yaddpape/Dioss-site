@@ -177,3 +177,14 @@ add_filter( 'body_class', function ( $c ) { $c[] = 'md'; return $c; } );
 require MD_DIR . '/inc/parts.php';
 require MD_DIR . '/inc/setup.php';
 
+
+/* Anciennes pages du thème précédent : redirection 301 vers les nouvelles */
+add_action( 'template_redirect', function () {
+	if ( ! is_page() ) { return; }
+	$map = array( 'services' => 'nettoyage', 'about-us' => 'a-propos', 'contact-us' => 'contact' );
+	$slug = get_post_field( 'post_name', get_queried_object_id() );
+	if ( isset( $map[ $slug ] ) ) {
+		wp_safe_redirect( md_page_url( $map[ $slug ] ), 301 );
+		exit;
+	}
+} );

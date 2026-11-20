@@ -9,9 +9,7 @@
 <a class="btn btn-dark" href="<?php echo esc_url( md_wa( 'Bonjour, je souhaite devenir revendeur Monsieur Dioss.' ) ); ?>" target="_blank" rel="noopener"><?php echo md_icon( 'wa' ); ?>Devenir revendeur</a>
 <a class="btn btn-dark" href="<?php echo esc_url( md_wa( 'Bonjour, j\'ai une question sur la formation Monsieur Dioss.' ) ); ?>" target="_blank" rel="noopener"><?php echo md_icon( 'wa' ); ?>Formation</a>
 </div>
-<?php while ( have_posts() ) : the_post(); $c = get_the_content(); if ( false !== strpos( $c, 'wpforms' ) ) : ?>
-<div class="prose" style="margin-top:40px"><?php the_content(); ?></div>
-<?php endif; endwhile; ?>
+
 </div>
 </section>
 <?php get_footer(); ?>
