@@ -26,10 +26,10 @@
 <!-- STATS -->
 <section style="padding:clamp(40px,6vw,64px) 0;border-bottom:1px solid #1C2740">
 <div class="wrap stats">
-<div class="stat rv"><b data-count="5">0</b><span>produits professionnels</span></div>
-<div class="stat rv d1"><b data-count="10">0</b><span>étapes maîtrisées par produit</span></div>
-<div class="stat rv d2"><b data-count="3">0</b><span>niveaux d'accompagnement</span></div>
-<div class="stat rv d3"><b data-count="30" data-suffix=" j">0</b><span>de suivi individuel (Elite)</span></div>
+<div class="stat rv"><b data-count="5">5</b><span>produits professionnels</span></div>
+<div class="stat rv d1"><b data-count="10">10</b><span>étapes maîtrisées par produit</span></div>
+<div class="stat rv d2"><b data-count="3">3</b><span>niveaux d'accompagnement</span></div>
+<div class="stat rv d3"><b data-count="30" data-suffix=" j">30 j</b><span>de suivi individuel (Elite)</span></div>
 </div>
 </section>
 
@@ -148,7 +148,7 @@
 </div>
 
 <div class="offer feat rv d1">
-<div class="badge">LA PLUS CHOISIE</div>
+<div class="badge">RECOMMANDÉE</div>
 <div><div class="lvl">OFFRE 2</div><h3>Dioss Business Academy</h3><div class="for">Pour apprendre en voyant faire</div></div>
 <div class="price">149 000 <small>FCFA</small></div>
 <div class="ul">
@@ -160,7 +160,8 @@
 <div><svg class="chk" style="color:var(--gold)"><use href="#ok"/></svg>Plan commercial</div>
 </div>
 <a class="btn btn-gold pulse" href="<?php echo esc_url( md_opt( 'chariow_academy' ) ); ?>">Rejoindre l'Academy</a>
-<div class="note">Cohorte pilote · accès aux vidéos à partir du <?php echo esc_html( md_opt( 'academy_date' ) ); ?></div>
+<?php $md_date = md_opt( 'academy_date' ); ?>
+<div class="note">Cohorte pilote<?php echo ( $md_date && false === strpos( $md_date, '[' ) ) ? ' · accès aux vidéos à partir du ' . esc_html( $md_date ) : ''; ?></div>
 </div>
 
 <div class="offer elite rv d2">

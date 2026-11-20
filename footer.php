@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 </main>
-<div class="band"><div class="wrap"><h2>Un chantier, une commande, une question ?</h2><a class="btn btn-dark" href="<?php echo esc_url( md_wa( 'Bonjour Monsieur Dioss, j\'ai une question.' ) ); ?>" target="_blank" rel="noopener"><?php echo md_icon( 'wa' ); ?>Écrire sur WhatsApp</a></div></div>
+<?php if ( ! is_page( 'formation' ) ) : ?><div class="band"><div class="wrap"><h2>Un chantier, une commande, une question ?</h2><a class="btn btn-dark" href="<?php echo esc_url( md_wa( 'Bonjour Monsieur Dioss, j\'ai une question.' ) ); ?>" target="_blank" rel="noopener"><?php echo md_icon( 'wa' ); ?>Écrire sur WhatsApp</a></div></div><?php endif; ?>
 <footer>
 <div class="wrap fgrid">
 <div>

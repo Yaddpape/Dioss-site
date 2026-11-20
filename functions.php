@@ -4,7 +4,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MD_VER', '1.4.0' );
+define( 'MD_VER', '1.5.0' );
 define( 'MD_DIR', get_template_directory() );
 define( 'MD_URI', get_template_directory_uri() );
 
@@ -17,7 +17,7 @@ function md_opt( $key ) {
 		'zone'            => 'Dakar et banlieue',
 		'chariow_manuel'  => 'https://slmhubkg.mychariow.com',
 		'chariow_academy' => 'https://slmhubkg.mychariow.com',
-		'academy_date'    => '[DATE]',
+		'academy_date'    => '',
 		'facebook'        => '',
 		'instagram'       => '',
 		'tiktok'          => '',
@@ -202,6 +202,40 @@ function md_post_cta() {
 	}
 	return array( 'Les produits Monsieur Dioss, livrés chez vous', 'Nettoyants carreaux & WC, déboucheur NDOMBO : fabriqués au Sénégal, livrés à ' . md_opt( 'zone' ) . '.', md_shop_url(), 'Voir la boutique', false );
 }
+
+/* ---------- Référencement : description et fiche entreprise (données réelles uniquement) ---------- */
+function md_default_description() {
+	return 'Monsieur Dioss, le patron de la propreté : produits d\'entretien fabriqués au Sénégal, services de nettoyage à ' . md_opt( 'zone' ) . ' et formation pour devenir fabricant.';
+}
+add_filter( 'aioseo_description', function ( $d ) {
+	return ( '' === trim( (string) $d ) && is_front_page() ) ? md_default_description() : $d;
+} );
+add_action( 'wp_head', function () {
+	if ( ! is_front_page() ) { return; }
+	if ( ! defined( 'AIOSEO_VERSION' ) ) {
+		echo '<meta name="description" content="' . esc_attr( md_default_description() ) . '">' . "\n";
+	}
+	$same = array_values( array_filter( array( md_opt( 'facebook' ), md_opt( 'instagram' ), md_opt( 'tiktok' ) ) ) );
+	$data = array(
+		'@context'    => 'https://schema.org',
+		'@type'       => 'LocalBusiness',
+		'@id'         => home_url( '/#entreprise' ),
+		'name'        => 'Monsieur Dioss',
+		'slogan'      => 'Le patron de la propreté',
+		'description' => md_default_description(),
+		'url'         => home_url( '/' ),
+		'logo'        => MD_URI . '/assets/img/logo-mascotte.jpg',
+		'image'       => MD_URI . '/assets/img/gamme.jpg',
+		'telephone'   => '+' . preg_replace( '/\D/', '', md_opt( 'whatsapp' ) ),
+		'email'       => md_opt( 'email' ),
+		'address'     => array( '@type' => 'PostalAddress', 'addressLocality' => 'Dakar', 'addressCountry' => 'SN' ),
+		'areaServed'  => md_opt( 'zone' ),
+		'currenciesAccepted' => 'XOF',
+		'paymentAccepted'    => 'Wave, Orange Money',
+	);
+	if ( $same ) { $data['sameAs'] = $same; }
+	echo '<script type="application/ld+json">' . wp_json_encode( $data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
+}, 5 );
 
 /* ---------- Nettoyage de l'en-tête ---------- */
 remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
