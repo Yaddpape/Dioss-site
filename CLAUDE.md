@@ -25,6 +25,7 @@ d'entretien (WooCommerce) et formation pour devenir fabricant. Plus un blog SEO.
 - `assets/js/main.js` — menu mobile, apparitions au défilement, compteurs, vidéos, projecteur sur les cartes.
 - Signature de l'accueil (fin de `main.css`, « coup de raclette ») : vitre ternie balayée par une raclette dorée à l'ouverture (CSS seul, `@property --wx`), sceau rotatif, bandeau de signatures, reflet des boutons dorés. Tout est coupé avec `prefers-reduced-motion`.
 - Prestige v2 (fin de `main.css` et `main.js`) : manifeste qui s'allume mot à mot au défilement (`[data-manif]`), bande gamme plein écran en parallaxe (`[data-parallax]`), ligne d'étapes qui se trace (`[data-draw]`), engagements numérotés, navigation transparente sur l'accueil (`.nav.solid` au défilement), grain argentique, signature géante en pied de page, contacts cliquables.
+- Boutique (`woocommerce.php`, `md_shop_hero()` dans `functions.php`, fin de `main.css`) : en-tête de marque avec catégories, cartes Ajouter + WhatsApp, prix « 2 500 FCFA » (`pre_option_woocommerce_currency_pos`), fiche produit et blocs Panier/Commande stylés. L'icône panier de l'en-tête est `.nav-r .cart` : ne jamais styler `.cart` seul (c'est aussi le formulaire d'achat WooCommerce).
 - `assets/img/` — images (générées sur Higgsfield, sans personnes ; photos produits réelles).
 
 ## Identité
@@ -45,3 +46,7 @@ d'entretien (WooCommerce) et formation pour devenir fabricant. Plus un blog SEO.
 ## Tester en local
 WordPress + plugin SQLite (`WordPress/sqlite-database-integration`), lien symbolique du thème dans
 `wp-content/themes/`, `php -S`, puis captures à 1366 px et 390 px.
+- wordpress.org est bloqué depuis les sessions cloud : WordPress via `git clone https://github.com/WordPress/WordPress`,
+  WooCommerce via la release GitHub (`github.com/woocommerce/woocommerce/releases/download/<version>/woocommerce.zip`),
+  WP-CLI via sa release GitHub (`--allow-root`). Le plugin SQLite est dans `packages/plugin-sqlite-database-integration`
+  du dépôt ; remplacer son lien `wp-includes/database` par une copie de `packages/mysql-on-sqlite/src`.

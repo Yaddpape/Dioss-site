@@ -4,7 +4,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MD_VER', '1.3.0' );
+define( 'MD_VER', '1.4.0' );
 define( 'MD_DIR', get_template_directory() );
 define( 'MD_URI', get_template_directory_uri() );
 
@@ -121,6 +121,40 @@ add_filter( 'woocommerce_currency_symbol', function ( $symbol, $currency ) {
 remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10 );
 remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10 );
 remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
+
+/* Prix au format sénégalais : « 2 500 FCFA » */
+add_filter( 'pre_option_woocommerce_currency_pos', function ( $pos ) {
+	return 'XOF' === get_option( 'woocommerce_currency' ) ? 'right_space' : $pos;
+} );
+add_filter( 'woocommerce_show_page_title', '__return_false' );
+remove_action( 'woocommerce_archive_description', 'woocommerce_taxonomy_archive_description', 10 );
+remove_action( 'woocommerce_archive_description', 'woocommerce_product_archive_description', 10 );
+add_filter( 'woocommerce_sale_flash', function () { return '<span class="onsale">Promo</span>'; } );
+add_filter( 'woocommerce_product_add_to_cart_text', function ( $text, $product ) {
+	return ( $product->is_type( 'simple' ) && $product->is_purchasable() && $product->is_in_stock() ) ? 'Ajouter' : $text;
+}, 10, 2 );
+
+/** En-tête de la boutique et des catégories de produits. */
+function md_shop_hero() {
+	$term  = is_product_taxonomy() ? get_queried_object() : null;
+	$title = $term ? $term->name : 'La boutique Monsieur Dioss';
+	$lead  = ( $term && $term->description ) ? wp_strip_all_tags( $term->description ) : 'Produits d\'entretien formulés et fabriqués au Sénégal, testés chaque jour sur nos chantiers.';
+	echo '<section class="page-hero shop-hero"><div class="bg"><img src="' . md_img( 'gamme.jpg' ) . '" alt=""><div class="glass" aria-hidden="true"><i class="fog"></i><i class="gleam"></i><i class="blade"></i></div></div><div class="wrap">';
+	echo '<div class="crumbs"><a href="' . esc_url( home_url( '/' ) ) . '">Accueil</a> / ' . ( $term ? '<a href="' . esc_url( md_shop_url() ) . '">Boutique</a> / ' . esc_html( $term->name ) : 'Boutique' ) . '</div>';
+	echo '<h1>' . esc_html( $title ) . '</h1><p class="lead">' . esc_html( $lead ) . '</p>';
+	echo '<div class="pills"><span class="pill">Fabriqué au Sénégal</span><span class="pill">Livraison ' . esc_html( md_opt( 'zone' ) ) . '</span><span class="pill">Wave · Orange Money</span><a class="pill pill-a" href="' . esc_url( md_wa( 'Bonjour, je souhaite devenir revendeur Monsieur Dioss.' ) ) . '" target="_blank" rel="noopener">Prix revendeurs par carton ' . md_icon( 'arr' ) . '</a></div>';
+	$cats = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => true ) );
+	$cats = is_array( $cats ) ? array_filter( $cats, function ( $c ) { return ! in_array( $c->slug, array( 'uncategorized', 'non-classe' ), true ); } ) : array();
+	if ( $cats ) {
+		echo '<nav class="shop-cats" aria-label="Catégories de produits"><a href="' . esc_url( md_shop_url() ) . '"' . ( $term ? '' : ' class="on" aria-current="page"' ) . '>Tous les produits</a>';
+		foreach ( $cats as $c ) {
+			$on = $term && (int) $term->term_id === (int) $c->term_id;
+			echo '<a href="' . esc_url( get_term_link( $c ) ) . '"' . ( $on ? ' class="on" aria-current="page"' : '' ) . '>' . esc_html( $c->name ) . '</a>';
+		}
+		echo '</nav>';
+	}
+	echo '</div></section>';
+}
 
 function md_wa_product_message( $product ) {
 	$price = html_entity_decode( wp_strip_all_tags( wc_price( $product->get_price() ) ), ENT_QUOTES, 'UTF-8' );
