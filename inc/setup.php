@@ -7,7 +7,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MD_SETUP_VERSION', '1' );
+define( 'MD_SETUP_VERSION', '2' );
 
 add_action( 'after_switch_theme', 'md_run_setup' );
 add_action( 'admin_init', function () {
@@ -79,6 +79,16 @@ function md_run_setup() {
 		if ( $demo && 'trash' !== $demo->post_status ) { wp_trash_post( $demo->ID ); $log[] = 'corbeille ' . $slug; }
 	}
 
+	/* 4 bis (v2). Tous les autres articles de démonstration en lorem ipsum : corbeille */
+	$lorem = get_posts( array( 'post_type' => 'post', 'post_status' => array( 'publish', 'draft', 'pending', 'future' ), 'numberposts' => 100, 's' => 'Lorem ipsum dolor sit amet' ) );
+	foreach ( $lorem as $demo ) {
+		if ( false !== stripos( $demo->post_content, 'lorem ipsum' ) ) { wp_trash_post( $demo->ID ); $log[] = 'corbeille ' . $demo->post_name; }
+	}
+
+	/* Nom du site */
+	if ( in_array( get_option( 'blogname' ), array( 'monsieurdioss.com', '' ), true ) ) { update_option( 'blogname', 'Monsieur Dioss' ); }
+	if ( '' === trim( (string) get_option( 'blogdescription' ) ) || false !== stripos( (string) get_option( 'blogdescription' ), 'wordpress' ) ) { update_option( 'blogdescription', 'Le patron de la propreté' ); }
+
 	/* 5. Catégories de produits WooCommerce */
 	if ( taxonomy_exists( 'product_cat' ) ) {
 		$pcats = array(
@@ -131,7 +141,7 @@ function md_run_setup() {
 		$log[] = 'brouillon ' . $a['slug'];
 	}
 
-	update_option( 'md_setup_log', $log, false );
+	update_option( 'md_setup_log', array_merge( (array) get_option( 'md_setup_log', array() ), $log ), false );
 	update_option( 'md_setup_version', MD_SETUP_VERSION );
 	delete_transient( 'md_setup_lock' );
 	flush_rewrite_rules( false );

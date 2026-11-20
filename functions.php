@@ -123,7 +123,9 @@ remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wra
 remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 
 function md_wa_product_message( $product ) {
-	return sprintf( 'Bonjour Monsieur Dioss, je veux commander : %s (%s). Merci de me confirmer la livraison.', wp_strip_all_tags( $product->get_name() ), wp_strip_all_tags( wc_price( $product->get_price() ) ) );
+	$price = html_entity_decode( wp_strip_all_tags( wc_price( $product->get_price() ) ), ENT_QUOTES, 'UTF-8' );
+	$price = str_replace( "\xC2\xA0", ' ', $price );
+	return sprintf( 'Bonjour Monsieur Dioss, je veux commander : %s (%s). Merci de me confirmer la livraison.', html_entity_decode( wp_strip_all_tags( $product->get_name() ), ENT_QUOTES, 'UTF-8' ), $price );
 }
 
 add_action( 'woocommerce_after_add_to_cart_form', function () {
