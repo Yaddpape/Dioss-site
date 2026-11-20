@@ -12,6 +12,7 @@
 <?php md_services_cards(); ?>
 </div>
 </section>
+<?php md_proof_section(); ?>
 <section class="sec light">
 <div class="wrap">
 <div class="eyebrow rv">Comment ça se passe</div>

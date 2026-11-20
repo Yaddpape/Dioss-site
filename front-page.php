@@ -84,6 +84,8 @@ foreach ( explode( ' ', $md_manif ) as $w ) {
 </div>
 </section>
 
+<?php md_proof_section(); ?>
+
 <section class="sec" id="formation">
 <div class="wrap form">
 <div>

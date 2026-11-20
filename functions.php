@@ -4,7 +4,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MD_VER', '1.2.0' );
+define( 'MD_VER', '1.3.0' );
 define( 'MD_DIR', get_template_directory() );
 define( 'MD_URI', get_template_directory_uri() );
 
@@ -176,6 +176,7 @@ add_filter( 'body_class', function ( $c ) { $c[] = 'md'; return $c; } );
 
 require MD_DIR . '/inc/parts.php';
 require MD_DIR . '/inc/setup.php';
+require MD_DIR . '/inc/realisations.php';
 
 
 /* Anciennes pages du thème précédent : redirection 301 vers les nouvelles */

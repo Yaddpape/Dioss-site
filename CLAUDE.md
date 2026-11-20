@@ -18,6 +18,7 @@ d'entretien (WooCommerce) et formation pour devenir fabricant. Plus un blog SEO.
 - `inc/parts.php` — blocs réutilisables (grille produits, cartes services, étapes, contacts, en-tête de page).
 - `inc/setup.php` — mise en place unique à l'activation (pages, accueil, blog, catégories, brouillons). Versionné par `MD_SETUP_VERSION` : n'incrémente que pour une nouvelle migration, et garde-la idempotente.
 - `inc/articles.php` — 8 premiers articles importés en brouillon.
+- `inc/realisations.php` — types « Vidéos chantiers » (`md_video`) et « Témoignages » (`md_temoignage`), champs, section `md_proof_section()` (accueil et page Nettoyage) et visionneuse vidéo. Section invisible pour les visiteurs tant qu'elle est vide ; un encadré guide l'administrateur. Contenu réel uniquement.
 - `front-page.php`, `page-nettoyage.php`, `page-formation.php`, `page-a-propos.php`, `page-contact.php` — pages par slug.
 - `index.php` (blog et catégories), `single.php` (article), `page.php`, `woocommerce.php`, `404.php`.
 - `assets/css/main.css` — styles du site. `assets/css/formation.css` — page Formation, toutes les règles préfixées `.lp`.
