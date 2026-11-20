@@ -5,8 +5,12 @@ Thème sur mesure (PHP classique, sans constructeur) pour la marque sénégalais
 d'entretien (WooCommerce) et formation pour devenir fabricant. Plus un blog SEO.
 
 ## Déploiement
-- Ce dépôt est cloné par Hostinger dans `public_html/wp-content/themes/monsieur-dioss/`.
-- Chaque push sur `main` est redéployé sur le site **en production**. Teste avant de pousser.
+- Ce dépôt est cloné par Hostinger dans `public_html/wp-content/themes/monsieur-dioss/` (site monsieurdioss.com, compte `u692387964`).
+- Un push ne met PAS le site à jour tout seul. Après un push sur `main`, redéploie avec le connecteur Hostinger :
+  `hosting_git_deploy-website-repository` (username `u692387964`, domain `monsieurdioss.com`,
+  repository_url `https://github.com/Yaddpape/dioss-site.git`, branch `main`, directory `wp-content/themes/monsieur-dioss`).
+  Sans connecteur : hPanel → Sites web → monsieurdioss.com → Avancé → Git → Déployer.
+- Le thème est **en production** : teste en local avant de pousser, puis vérifie le site en ligne (mobile et ordinateur).
 - Aucun secret dans ce dépôt (il est public) : pas de mot de passe, clé API ni jeton.
 
 ## Structure
