@@ -416,3 +416,12 @@ body.woocommerce-page main a:not(.btn):not(.button):not(.md-wa-btn):not(.md-wa-l
 
 .woocommerce div.product form.cart::before,.woocommerce div.product form.cart::after{display:none!important}
 .woocommerce div.product form.cart{width:auto}
+
+/* ===== Pages légales ===== */
+.flegal{display:flex;flex-wrap:wrap;gap:4px 18px}.flegal a{display:inline;padding:0;color:var(--mut)}.flegal a:hover{color:var(--gold)}
+.legal-nav{margin:0 auto 34px;max-width:760px}
+.legal .legal-upd{font-size:14px;color:#6B7489;margin-bottom:26px}
+.legal table th{width:42%;background:#EEF1F5;font-weight:700;color:var(--dk)}
+.legal h2{font-size:clamp(21px,2.4vw,26px)}
+.flegal a{padding:10px 0}
+@media (max-width:700px){.fbot{padding-bottom:92px}}

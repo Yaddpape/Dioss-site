@@ -4,7 +4,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MD_VER', '1.5.1' );
+define( 'MD_VER', '1.6.0' );
 define( 'MD_DIR', get_template_directory() );
 define( 'MD_URI', get_template_directory_uri() );
 
@@ -21,6 +21,11 @@ function md_opt( $key ) {
 		'facebook'        => '',
 		'instagram'       => '',
 		'tiktok'          => '',
+		'legal_name'      => '',
+		'ninea'           => '',
+		'rccm'            => '',
+		'address'         => '',
+		'publisher'       => '',
 	);
 	$v = get_theme_mod( 'md_' . $key, '' );
 	return ( '' === $v || null === $v ) ? ( isset( $defaults[ $key ] ) ? $defaults[ $key ] : '' ) : $v;
@@ -99,6 +104,11 @@ add_action( 'customize_register', function ( $wp ) {
 		'facebook'        => 'Lien page Facebook',
 		'instagram'       => 'Lien Instagram',
 		'tiktok'          => 'Lien TikTok',
+		'legal_name'      => 'Pages légales : raison sociale (laisser vide si aucune)',
+		'ninea'           => 'Pages légales : NINEA',
+		'rccm'            => 'Pages légales : RCCM',
+		'address'         => 'Pages légales : adresse (par défaut « Dakar, Sénégal »)',
+		'publisher'       => 'Pages légales : responsable de la publication',
 	);
 	foreach ( $fields as $k => $label ) {
 		$wp->add_setting( 'md_' . $k, array( 'default' => '', 'sanitize_callback' => ( false !== strpos( $k, 'chariow' ) || in_array( $k, array( 'facebook', 'instagram', 'tiktok' ), true ) ) ? 'esc_url_raw' : 'sanitize_text_field' ) );
@@ -246,6 +256,7 @@ require MD_DIR . '/inc/parts.php';
 require MD_DIR . '/inc/setup.php';
 require MD_DIR . '/inc/realisations.php';
 require MD_DIR . '/inc/catalog.php';
+require MD_DIR . '/inc/legal.php';
 
 
 /* Anciennes pages du thème précédent : redirection 301 vers les nouvelles */

@@ -9,7 +9,7 @@
 <div class="hero-in">
 <div class="eyebrow rv">Formation professionnelle · Édition premium</div>
 <h1 class="rv d1">Lancez votre entreprise de produits de nettoyage <em>en 24 heures</em></h1>
-<p class="lead rv d2">Le parcours de démarrage des entrepreneurs qui veulent fabriquer et vendre des produits d'entretien de qualité professionnelle : formulations, protocoles, contrôle qualité, coûts, marque et plan commercial.</p>
+<p class="lead rv d2"><strong class="hl">Même sans aucune connaissance en formulation</strong>, lancez-vous en 24 heures et fabriquez des produits d'entretien de qualité professionnelle, grâce à nos formules déjà testées en laboratoire et optimisées.</p>
 <div class="quote rv d2">« Une entreprise solide commence par un bon produit. »</div>
 <div class="cta-row rv d3">
 <a class="btn btn-gold pulse" href="#offres">Choisir mon offre</a>
@@ -30,6 +30,22 @@
 <div class="stat rv d1"><b data-count="10">10</b><span>étapes maîtrisées par produit</span></div>
 <div class="stat rv d2"><b data-count="3">3</b><span>niveaux d'accompagnement</span></div>
 <div class="stat rv d3"><b data-count="30" data-suffix=" j">30 j</b><span>de suivi individuel (Elite)</span></div>
+</div>
+</section>
+
+<!-- DÉBUTANTS -->
+<section class="novice">
+<div class="wrap novice-in">
+<div>
+<div class="eyebrow rv">Débutant en formulation ?</div>
+<h2 class="h2 rv d1" style="margin-top:12px">Vous n'avez pas besoin d'être chimiste. <em>Les formules sont prêtes.</em></h2>
+<p class="lead rv d2" style="margin-top:14px">Le plus difficile, c'est la mise au point d'une formule. Nous l'avons déjà faite pour vous : vous suivez la méthode, vous fabriquez, vous vendez.</p>
+</div>
+<div class="novice-list">
+<div class="nv rv"><b>Testées en laboratoire</b><span>Chaque formule a été mise au point et vérifiée avant de vous être transmise.</span></div>
+<div class="nv rv d1"><b>Optimisées</b><span>Des dosages ajustés pour un produit efficace, régulier et rentable.</span></div>
+<div class="nv rv d2"><b>Pas à pas</b><span>Quantités exactes, ordre des étapes, contrôle qualité et consignes de sécurité.</span></div>
+</div>
 </div>
 </section>
 
@@ -130,7 +146,7 @@
 <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px">
 <div class="eyebrow rv">Les offres</div>
 <h2 class="h2 rv d1">Choisissez votre niveau d'accompagnement</h2>
-<p class="lead rv d2">Trois façons de démarrer. Une même exigence de qualité.</p>
+<p class="lead rv d2">Trois façons de démarrer, même sans connaissance en formulation. Une même exigence de qualité.</p>
 </div>
 <div class="offers">
 
@@ -237,7 +253,8 @@
 <h2 class="h2 rv" style="text-align:center">Questions fréquentes</h2>
 <div class="faq">
 <details class="rv"><summary>Que signifie « en 24 heures » ?<span class="pl">+</span></summary><p>Les 24 heures concernent le parcours de démarrage : en une journée, vous structurez votre projet de fabrication et de vente. Ce n'est ni une garantie de rentabilité, ni une conformité réglementaire automatique : les démarches administratives et autorisations dépendent de votre pays.</p></details>
-<details class="rv"><summary>Les formulations sont-elles éprouvées ?<span class="pl">+</span></summary><p>Oui. Ce sont des formulations réelles, avec leurs quantités, leurs protocoles de fabrication, leurs contrôles qualité et leurs consignes de sécurité.</p></details>
+<details class="rv"><summary>Faut-il des connaissances en chimie ou en formulation ?<span class="pl">+</span></summary><p>Non. Nos formules sont déjà testées en laboratoire et optimisées. Vous recevez les quantités exactes, l'ordre des étapes et les contrôles à faire : vous pouvez vous lancer en 24 heures et fabriquer des produits de qualité dès vos premiers lots, en respectant les consignes de sécurité.</p></details>
+<details class="rv"><summary>Les formulations sont-elles éprouvées ?<span class="pl">+</span></summary><p>Oui. Elles sont testées en laboratoire et optimisées. Ce sont des formulations réelles, avec leurs quantités, leurs protocoles de fabrication, leurs contrôles qualité et leurs consignes de sécurité.</p></details>
 <details class="rv"><summary>Quelle offre choisir ?<span class="pl">+</span></summary><p>Le Manuel si vous savez avancer seul. L'Academy si vous voulez voir chaque fabrication en vidéo. L'Elite si vous investissez dans une unité de production et voulez un diagnostic, une étude de rentabilité et 30 jours de suivi individuel.</p></details>
 <details class="rv"><summary>Comment fonctionne la candidature Elite ?<span class="pl">+</span></summary><p>Vous nous écrivez sur WhatsApp. Nous échangeons sur votre projet, votre budget et vos objectifs. Si l'accompagnement vous convient et qu'une place est disponible, nous vous envoyons le lien de paiement.</p></details>
 <details class="rv"><summary>Faut-il un capital pour démarrer ?<span class="pl">+</span></summary><p>Oui. Prévoyez un budget pour le matériel, les matières premières, les emballages et les étiquettes. Le manuel vous aide à le chiffrer, et l'offre Elite inclut une étude de rentabilité.</p></details>
