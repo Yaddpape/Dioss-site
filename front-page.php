@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <section class="hero">
-<div class="hero-bg"><img class="kb" src="<?php echo md_img( 'salon.jpg' ); ?>" alt="" fetchpriority="high"></div><div class="hero-sh"></div>
+<div class="hero-bg"><img class="kb" src="<?php echo md_img( 'salon.jpg' ); ?>" alt="" fetchpriority="high"><div class="glass" aria-hidden="true"><i class="fog"></i><i class="gleam"></i><i class="blade"></i></div><i class="spark s1" aria-hidden="true"></i><i class="spark s2" aria-hidden="true"></i><i class="spark s3" aria-hidden="true"></i></div><div class="hero-sh"></div>
 <div class="wrap"><div class="hero-in">
 <div class="eyebrow rv">Monsieur Dioss · Sénégal</div>
 <h1 class="rv d1">La propreté, <em>version professionnelle.</em></h1>
@@ -8,7 +8,15 @@
 <div class="cta rv d2"><a class="btn btn-gold" href="<?php echo esc_url( md_page_url( 'nettoyage' ) ); ?>">Demander un devis nettoyage</a><a class="btn btn-ghost" href="<?php echo esc_url( md_shop_url() ); ?>">Acheter nos produits</a></div>
 <div class="pills rv d3"><span class="pill">Fabriqué au Sénégal</span><span class="pill">Livraison <?php echo esc_html( md_opt( 'zone' ) ); ?></span><span class="pill">Wave · Orange Money</span></div>
 </div></div>
+<div class="seal" aria-hidden="true"><svg viewBox="0 0 200 200"><defs><path id="md-seal" d="M100 100m-80 0a80 80 0 1 1 160 0a80 80 0 1 1-160 0"/></defs><text><textPath href="#md-seal" textLength="500" lengthAdjust="spacing">LE PATRON DE LA PROPRETÉ ✦ FABRIQUÉ AU SÉNÉGAL ✦ </textPath></text></svg><img src="<?php echo md_img( 'logo-mascotte.jpg' ); ?>" alt="" width="120" height="120"></div>
 </section>
+
+<?php
+$md_sig = array( 'La qualité n\'est jamais un hasard.', 'Créez. Fabriquez. Vendez. Développez.', 'Une entreprise solide commence par un bon produit.', 'Fabriqué au Sénégal' );
+$md_grp = '';
+foreach ( $md_sig as $sig ) { $md_grp .= '<span>' . esc_html( $sig ) . '</span><i>✦</i>'; }
+?>
+<div class="ticker"><div class="ticker-t"><div class="grp"><?php echo $md_grp; // phpcs:ignore -- échappé ci-dessus ?></div><div class="grp" aria-hidden="true"><?php echo $md_grp; // phpcs:ignore ?></div></div></div>
 
 <section class="sec">
 <div class="wrap">

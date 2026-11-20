@@ -21,7 +21,8 @@ d'entretien (WooCommerce) et formation pour devenir fabricant. Plus un blog SEO.
 - `front-page.php`, `page-nettoyage.php`, `page-formation.php`, `page-a-propos.php`, `page-contact.php` — pages par slug.
 - `index.php` (blog et catégories), `single.php` (article), `page.php`, `woocommerce.php`, `404.php`.
 - `assets/css/main.css` — styles du site. `assets/css/formation.css` — page Formation, toutes les règles préfixées `.lp`.
-- `assets/js/main.js` — menu mobile, apparitions au défilement, compteurs, vidéos.
+- `assets/js/main.js` — menu mobile, apparitions au défilement, compteurs, vidéos, projecteur sur les cartes.
+- Signature de l'accueil (fin de `main.css`, « coup de raclette ») : vitre ternie balayée par une raclette dorée à l'ouverture (CSS seul, `@property --wx`), sceau rotatif, bandeau de signatures, reflet des boutons dorés. Tout est coupé avec `prefers-reduced-motion`.
 - `assets/img/` — images (générées sur Higgsfield, sans personnes ; photos produits réelles).
 
 ## Identité

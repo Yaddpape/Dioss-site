@@ -17,3 +17,13 @@
   else { cs.forEach(function (c) { c.textContent = c.dataset.count + (c.dataset.suffix || ''); }); }
   document.querySelectorAll('video[data-auto]').forEach(function (v) { v.muted = true; var p = v.play(); if (p && p.catch) p.catch(function () {}); });
 })();
+(function () {
+  if (!window.matchMedia || !matchMedia('(hover:hover)').matches) return;
+  document.querySelectorAll('.pole').forEach(function (p) {
+    p.addEventListener('pointermove', function (e) {
+      var r = p.getBoundingClientRect();
+      p.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      p.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+})();
