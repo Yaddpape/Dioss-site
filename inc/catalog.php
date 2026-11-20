@@ -7,7 +7,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MD_CATALOG_VERSION', '2026-11-20' );
+define( 'MD_CATALOG_VERSION', '2026-11-20b' );
 
 add_action( 'init', function () {
 	if ( MD_CATALOG_VERSION === get_option( 'md_catalog_done' ) || ! function_exists( 'wc_get_product' ) ) { return; }
@@ -145,6 +145,12 @@ function md_catalog_run() {
 		$img = md_catalog_image( $n['img'][0], $n['img'][1], $id );
 		if ( $img ) { $p->set_image_id( $img ); $p->save(); } else { $log['errors'][] = 'image ' . $n['slug']; }
 		$log['done'][] = 'créé #' . $id . ' ' . $n['slug'];
+	}
+
+	/* 5. Ouverture de la boutique au public (demandée le 20/11/2026) : fin du mode « Bientôt disponible ». */
+	if ( 'yes' === get_option( 'woocommerce_coming_soon' ) ) {
+		update_option( 'woocommerce_coming_soon', 'no' );
+		$log['done'][] = 'boutique ouverte';
 	}
 
 	if ( function_exists( 'wc_delete_product_transients' ) ) { wc_delete_product_transients(); }
