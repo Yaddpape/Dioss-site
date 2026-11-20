@@ -28,11 +28,11 @@ function md_catalog_product( $slug ) {
 }
 
 /** Importe une photo du thème dans la médiathèque (une seule fois). */
-function md_catalog_image( $file, $alt, $parent = 0 ) {
+function md_catalog_image( $file, $alt, $parent = 0, $dir = 'produits' ) {
 	$key = 'md_catalog_img_' . md5( $file );
 	$id  = (int) get_option( $key );
 	if ( $id && get_post( $id ) ) { return $id; }
-	$path = MD_DIR . '/assets/img/produits/' . $file;
+	$path = MD_DIR . '/assets/img/' . $dir . '/' . $file;
 	if ( ! file_exists( $path ) ) { return 0; }
 	$up = wp_upload_bits( $file, null, file_get_contents( $path ) ); // phpcs:ignore -- fichier local du thème
 	if ( ! empty( $up['error'] ) ) { return 0; }
@@ -158,7 +158,7 @@ function md_catalog_run() {
 }
 
 /* Vidéos TikTok envoyées le 21/11/2026 : import en tâche de fond (appels à TikTok), 3 essais au plus. */
-define( 'MD_VIDEOS_VERSION', '2026-11-21' );
+define( 'MD_VIDEOS_VERSION', '2026-11-21b' );
 add_action( 'init', function () {
 	if ( MD_VIDEOS_VERSION === get_option( 'md_videos_done' ) || wp_next_scheduled( 'md_import_videos' ) ) { return; }
 	wp_schedule_single_event( time(), 'md_import_videos' );
@@ -166,8 +166,8 @@ add_action( 'init', function () {
 add_action( 'md_import_videos', function () {
 	if ( MD_VIDEOS_VERSION === get_option( 'md_videos_done' ) ) { return; }
 	$log   = md_catalog_videos( array( 'done' => array(), 'errors' => array() ) );
-	$tries = (int) get_option( 'md_videos_tries' ) + 1;
-	update_option( 'md_videos_tries', $tries, false );
+	$tries = (int) get_option( 'md_videos_tries_' . MD_VIDEOS_VERSION ) + 1;
+	update_option( 'md_videos_tries_' . MD_VIDEOS_VERSION, $tries, false );
 	update_option( 'md_videos_log', $log, false );
 	if ( empty( $log['errors'] ) || $tries >= 3 ) {
 		update_option( 'md_videos_done', MD_VIDEOS_VERSION );
@@ -176,21 +176,25 @@ add_action( 'md_import_videos', function () {
 	}
 } );
 
-/** Importe les vidéos TikTok : fiche « Vidéo chantier », aperçu officiel, profil TikTok. */
+/**
+ * Importe les vidéos TikTok de @monsieur.dioss : fiche « Vidéo chantier », couverture officielle
+ * (récupérée sur TikTok et livrée dans assets/img/videos/, car l'oEmbed TikTok ne fournit plus d'aperçu),
+ * lien du profil TikTok s'il est vide.
+ */
 function md_catalog_videos( $log ) {
 	if ( ! post_type_exists( 'md_video' ) ) { $log['errors'][] = 'type md_video absent'; return $log; }
 	$videos = array(
-		array( 'https://vm.tiktok.com/ZGdXGgnqP/', 'Démonstration du nettoyant carreaux Monsieur Dioss', 'Démonstration produit' ),
-		array( 'https://vm.tiktok.com/ZGdXGPhcY/', 'Démonstration de BENET, le dégraissant, en cuisine', 'Démonstration produit' ),
-		array( 'https://vm.tiktok.com/ZGdXGXLAf/', 'Chantier à la Cité Keur Gorgui', 'Cité Keur Gorgui, Dakar' ),
-		array( 'https://vm.tiktok.com/ZGdXGt1B6/', 'Nettoyage aux Mamelles', 'Les Mamelles, Dakar' ),
-		array( 'https://vm.tiktok.com/ZGdXGbLsJ/', 'Grattage de murs à peinture dure', 'Liberté 6 · Chantier de déménagement' ),
+		array( 'https://vm.tiktok.com/ZGdXGgnqP/', '7709844844998380833', 'Démonstration du nettoyant carreaux Monsieur Dioss', 'Démonstration produit' ),
+		array( 'https://vm.tiktok.com/ZGdXGPhcY/', '7696987746962820384', 'Démonstration de BENET, le dégraissant, en cuisine', 'Démonstration produit' ),
+		array( 'https://vm.tiktok.com/ZGdXGXLAf/', '7696981768431275296', 'Chantier à la Cité Keur Gorgui', 'Cité Keur Gorgui, Dakar' ),
+		array( 'https://vm.tiktok.com/ZGdXGt1B6/', '7663630668055776544', 'Nettoyage aux Mamelles', 'Les Mamelles, Dakar' ),
+		array( 'https://vm.tiktok.com/ZGdXGbLsJ/', '7654285120496536864', 'Grattage de murs à peinture dure', 'Liberté 6 · Chantier de déménagement' ),
 	);
-	require_once ABSPATH . 'wp-admin/includes/media.php';
-	require_once ABSPATH . 'wp-admin/includes/file.php';
-	require_once ABSPATH . 'wp-admin/includes/image.php';
+	$profile = 'https://www.tiktok.com/@monsieur.dioss';
+	if ( '' === md_opt( 'tiktok' ) ) { set_theme_mod( 'md_tiktok', $profile ); }
 	foreach ( $videos as $i => $v ) {
-		list( $short, $title, $lieu ) = $v;
+		list( $short, $vid, $title, $lieu ) = $v;
+		$full  = $profile . '/video/' . $vid;
 		$found = get_posts( array( 'post_type' => 'md_video', 'post_status' => 'any', 'numberposts' => 1, 'meta_key' => '_md_video_src', 'meta_value' => $short, 'fields' => 'ids' ) );
 		$id    = $found ? (int) $found[0] : 0;
 		if ( ! $id ) {
@@ -199,22 +203,12 @@ function md_catalog_videos( $log ) {
 			update_post_meta( $id, '_md_video_src', $short );
 			update_post_meta( $id, '_md_video_lieu', $lieu );
 		}
-		$full = md_tiktok_resolve( $short );
 		update_post_meta( $id, '_md_video_url', $full );
-		if ( $full === $short ) { $log['errors'][] = 'lien non résolu ' . $short; continue; }
-		if ( has_post_thumbnail( $id ) ) { $log['done'][] = 'vidéo #' . $id; continue; }
-		$oe = wp_remote_get( 'https://www.tiktok.com/oembed?url=' . rawurlencode( $full ), array( 'timeout' => 15 ) );
-		$oe = is_wp_error( $oe ) ? null : json_decode( wp_remote_retrieve_body( $oe ), true );
-		if ( empty( $oe['thumbnail_url'] ) ) { $log['errors'][] = 'aperçu absent ' . $short; continue; }
-		if ( ! empty( $oe['author_url'] ) && '' === md_opt( 'tiktok' ) && preg_match( '~^https://www\.tiktok\.com/@[\w.-]+$~', $oe['author_url'] ) ) {
-			set_theme_mod( 'md_tiktok', esc_url_raw( $oe['author_url'] ) );
+		update_option( 'md_tt_' . md5( $short ), $full, false );
+		if ( ! has_post_thumbnail( $id ) ) {
+			$att = md_catalog_image( 'tiktok-' . $vid . '.jpg', $title, $id, 'videos' );
+			if ( $att ) { set_post_thumbnail( $id, $att ); } else { $log['errors'][] = 'couverture ' . $vid; continue; }
 		}
-		$tmp = download_url( $oe['thumbnail_url'], 20 );
-		if ( is_wp_error( $tmp ) ) { $log['errors'][] = 'téléchargement aperçu ' . $short; continue; }
-		$att = media_handle_sideload( array( 'name' => 'tiktok-' . basename( $full ) . '.jpg', 'tmp_name' => $tmp ), $id, $title );
-		if ( is_wp_error( $att ) ) { @unlink( $tmp ); $log['errors'][] = 'aperçu ' . $short; continue; } // phpcs:ignore
-		update_post_meta( $att, '_wp_attachment_image_alt', $title );
-		set_post_thumbnail( $id, $att );
 		$log['done'][] = 'vidéo #' . $id . ' ' . $full;
 	}
 	return $log;

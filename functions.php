@@ -4,7 +4,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MD_VER', '1.6.1' );
+define( 'MD_VER', '1.6.2' );
 define( 'MD_DIR', get_template_directory() );
 define( 'MD_URI', get_template_directory_uri() );
 
