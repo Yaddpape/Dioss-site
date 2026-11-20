@@ -137,7 +137,32 @@ function md_is_video_file( $url ) {
 }
 
 /** Lecteur intégré pour un lien YouTube, TikTok ou autre (oEmbed mis en cache). */
+/** Lien court TikTok (vm./vt.tiktok.com) → adresse complète, mise en cache définitivement. */
+function md_tiktok_resolve( $url ) {
+	if ( ! preg_match( '~//(vm|vt)\.tiktok\.com/~', (string) $url ) ) { return $url; }
+	$key    = 'md_tt_' . md5( $url );
+	$cached = get_option( $key );
+	if ( $cached ) { return $cached; }
+	$r = wp_remote_get( $url, array( 'timeout' => 15, 'redirection' => 5, 'user-agent' => 'Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Mobile Safari/537.36' ) );
+	if ( is_wp_error( $r ) ) { return $url; }
+	$cands = array();
+	if ( isset( $r['http_response'] ) && is_object( $r['http_response'] ) && method_exists( $r['http_response'], 'get_response_object' ) ) {
+		$cands[] = (string) $r['http_response']->get_response_object()->url;
+	}
+	$cands[] = (string) wp_remote_retrieve_header( $r, 'location' );
+	$cands[] = (string) wp_remote_retrieve_body( $r );
+	foreach ( $cands as $c ) {
+		if ( preg_match( '~tiktok\.com/(@[\w.-]+)/video/(\d{8,})~', $c, $m ) ) {
+			$full = 'https://www.tiktok.com/' . $m[1] . '/video/' . $m[2];
+			update_option( $key, $full, false );
+			return $full;
+		}
+	}
+	return $url;
+}
+
 function md_embed_html( $url ) {
+	$url   = md_tiktok_resolve( $url );
 	$frame = '';
 	$vert  = (bool) preg_match( '~(shorts/|tiktok\.com|instagram\.com/reel)~', $url );
 	if ( preg_match( '~(?:youtube\.com/(?:shorts/|watch\?v=|embed/)|youtu\.be/)([\w-]{11})~', $url, $m ) ) {
