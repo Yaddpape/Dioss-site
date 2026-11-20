@@ -176,3 +176,13 @@ add_filter( 'body_class', function ( $c ) { $c[] = 'md'; return $c; } );
 
 require MD_DIR . '/inc/parts.php';
 require MD_DIR . '/inc/setup.php';
+
+/* Diagnostic temporaire : enregistre la dernière erreur fatale dans uploads/md-debug.txt */
+register_shutdown_function( function () {
+	$e = error_get_last();
+	if ( $e && in_array( $e['type'], array( E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_RECOVERABLE_ERROR ), true ) ) {
+		$u = function_exists( 'wp_upload_dir' ) ? wp_upload_dir() : null;
+		$dir = $u && empty( $u['error'] ) ? $u['basedir'] : WP_CONTENT_DIR;
+		@file_put_contents( $dir . '/md-debug.txt', gmdate( 'c' ) . ' ' . ( isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '' ) . "\n" . $e['message'] . ' @ ' . $e['file'] . ':' . $e['line'] . "\n\n", FILE_APPEND );
+	}
+} );
